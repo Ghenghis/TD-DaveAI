@@ -5,7 +5,8 @@
   "workspaces": [
     "shared",
     "server",
-    "client"
+    "client",
+    "scripts"
   ],
   "engines": {
     "node": ">=20.10.0"
@@ -14,7 +15,8 @@
     "dev": "concurrently -n server,client -c blue,green \"npm -w server run dev\" \"npm -w client run dev\"",
     "build": "npm -w shared run build && npm -w server run build && npm -w client run build",
     "test": "npm -w shared run test --if-present && npm -w server run test && npm -w client run test",
-    "lint": "prettier --check ."
+    "lint": "prettier --check .",
+    "assets": "npm -w @td/scripts run prepare-assets"
   },
   "devDependencies": {
     "concurrently": "^9.0.0",

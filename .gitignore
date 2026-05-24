@@ -43,3 +43,7 @@ coverage/
 # Worktrees + local Claude config
 .worktrees/
 .claude/
+
+# Copied assets
+client/public/assets/*
+!client/public/assets/.gitkeep
