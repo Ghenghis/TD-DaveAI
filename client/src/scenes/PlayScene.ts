@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { SceneKeys } from './BootScene.js';
+import { Hud } from '../ui/Hud.js';
 import mapData from '../game/data/maps/grasslands.json' with { type: 'json' };
 import towersData from '../game/data/towers.json' with { type: 'json' };
 import enemiesData from '../game/data/enemies.json' with { type: 'json' };
@@ -101,6 +102,15 @@ export class PlayScene extends Phaser.Scene {
     this.drawPath();
     this.setupBuildInput();
     void this.startNextWave();
+    const hud = new Hud(this, { onSelectTower: (k) => this.setSelectedTower(k) });
+    this.sceneEvents = {
+      onHudUpdate: (st) => {
+        hud.update(st);
+        if (st.aiSource !== 'pending' && this.waveActive && this.waveElapsedMs < 50)
+          hud.flashWaveBanner(st.wave);
+      },
+      onGameOver: () => {},
+    };
     this.emitHud();
   }
 
