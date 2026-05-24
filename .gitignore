@@ -17,6 +17,9 @@ private/
 secrets.*
 *.key
 *.pem
+# Allow source files whose names start with "secrets" (the module, not key data)
+!**/secrets.ts
+!**/secrets.test.ts
 
 # Editor / OS
 .vscode/
