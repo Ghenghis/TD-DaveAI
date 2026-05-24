@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { BootScene, SceneKeys } from './scenes/BootScene.js';
+import { MenuScene } from './scenes/MenuScene.js';
 
 export const GAME_WIDTH = 1280;
 export const GAME_HEIGHT = 768;
@@ -11,7 +12,7 @@ export function startGame(parent: string | HTMLElement = 'game'): Phaser.Game {
     height: GAME_HEIGHT,
     parent,
     backgroundColor: '#1a1a1a',
-    scene: [BootScene],
+    scene: [BootScene, MenuScene],
   });
 }
 
