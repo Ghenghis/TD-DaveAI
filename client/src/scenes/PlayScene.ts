@@ -241,14 +241,38 @@ export class PlayScene extends Phaser.Scene {
 
   private drawTiles(): void {
     const ts = this.map.tileSize;
+
+    // Rasterise the path polyline into a set of grid cells.
+    // All segments in grasslands.json are axis-aligned so stepping by sign works.
+    const pathCells = new Set<string>();
+    for (let i = 0; i < this.map.path.length - 1; i++) {
+      const [x1, y1] = this.map.path[i]!;
+      const [x2, y2] = this.map.path[i + 1]!;
+      const dx = Math.sign(x2 - x1);
+      const dy = Math.sign(y2 - y1);
+      let cx = x1;
+      let cy = y1;
+      pathCells.add(`${cx},${cy}`);
+      while (cx !== x2 || cy !== y2) {
+        cx += dx;
+        cy += dy;
+        pathCells.add(`${cx},${cy}`);
+      }
+    }
+    // eslint-disable-next-line no-console
+    console.log(`[PlayScene] path cell count: ${pathCells.size}`);
+
+    // Draw base terrain: grass everywhere, dirt only on path cells.
     for (let y = 0; y < this.map.height; y++) {
       for (let x = 0; x < this.map.width; x++) {
-        const buildable = this.map.buildableMask[y]?.[x] ?? false;
+        const onPath = pathCells.has(`${x},${y}`);
         this.add
-          .image(x * ts + ts / 2, y * ts + ts / 2, buildable ? 'tile-grass' : 'tile-path')
+          .image(x * ts + ts / 2, y * ts + ts / 2, onPath ? 'tile-path' : 'tile-grass')
           .setDisplaySize(ts, ts);
       }
     }
+
+    // Overlay spawn/goal markers on top of the path tiles they sit on.
     this.add
       .image(this.map.spawn[0] * ts + ts / 2, this.map.spawn[1] * ts + ts / 2, 'tile-spawn')
       .setDisplaySize(ts, ts);
@@ -258,7 +282,8 @@ export class PlayScene extends Phaser.Scene {
   }
 
   private drawPath(): void {
-    const g = this.add.graphics({ lineStyle: { width: 4, color: 0xffff00, alpha: 0.3 } });
+    // Path is now visually conveyed by dirt tiles; keep a very faint guide line.
+    const g = this.add.graphics({ lineStyle: { width: 2, color: 0xffff00, alpha: 0.15 } });
     g.beginPath();
     g.moveTo(this.pathPx[0]![0], this.pathPx[0]![1]);
     for (let i = 1; i < this.pathPx.length; i++) g.lineTo(this.pathPx[i]![0], this.pathPx[i]![1]);
