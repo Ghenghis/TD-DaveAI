@@ -36,3 +36,7 @@ coverage/
 # Cache
 .cache/
 .turbo/
+
+# Worktrees + local Claude config
+.worktrees/
+.claude/
