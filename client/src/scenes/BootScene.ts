@@ -37,7 +37,7 @@ export class BootScene extends Phaser.Scene {
 
     this.load.audio('sfx-shoot', 'audio/impact/Audio/impactPlate_light_000.ogg');
     this.load.audio('sfx-hit', 'audio/impact/Audio/impactPlate_medium_000.ogg');
-    this.load.audio('sfx-build', 'audio/ui/Audio/click_001.ogg');
+    this.load.audio('sfx-build', 'audio/ui/Audio/click1.ogg');
   }
 
   create(): void {
