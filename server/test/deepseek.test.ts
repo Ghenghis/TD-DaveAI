@@ -45,7 +45,10 @@ describe('requestWaveFromDeepseek', () => {
 
   it('throws on HTTP 500', async () => {
     mockServer.use(
-      http.post('https://api.deepseek.com/chat/completions', () => new HttpResponse(null, { status: 500 })),
+      http.post(
+        'https://api.deepseek.com/chat/completions',
+        () => new HttpResponse(null, { status: 500 }),
+      ),
     );
     await expect(
       requestWaveFromDeepseek({
@@ -75,7 +78,10 @@ describe('requestWaveFromDeepseek', () => {
     expect.assertions(1);
     const sensitiveKey = 'sk-deepseek-SECRET-9999';
     mockServer.use(
-      http.post('https://api.deepseek.com/chat/completions', () => new HttpResponse(null, { status: 500 })),
+      http.post(
+        'https://api.deepseek.com/chat/completions',
+        () => new HttpResponse(null, { status: 500 }),
+      ),
     );
     try {
       await requestWaveFromDeepseek({

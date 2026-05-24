@@ -10,7 +10,10 @@ function buildApp(generator: (req: WaveRequest) => Promise<WaveResponse>) {
   return app;
 }
 
-async function post(app: ReturnType<typeof buildApp>, body: unknown): Promise<{ status: number; body: any }> {
+async function post(
+  app: ReturnType<typeof buildApp>,
+  body: unknown,
+): Promise<{ status: number; body: any }> {
   return await new Promise((resolve) => {
     const fakeReq: any = {
       method: 'POST',
@@ -21,11 +24,19 @@ async function post(app: ReturnType<typeof buildApp>, body: unknown): Promise<{ 
     const fakeRes: any = {
       statusCode: 200,
       setHeader() {},
-      status(s: number) { this.statusCode = s; return this; },
-      json(j: any) { resolve({ status: this.statusCode, body: j }); },
-      send(s: any) { resolve({ status: this.statusCode, body: s }); },
+      status(s: number) {
+        this.statusCode = s;
+        return this;
+      },
+      json(j: any) {
+        resolve({ status: this.statusCode, body: j });
+      },
+      send(s: any) {
+        resolve({ status: this.statusCode, body: s });
+      },
     };
-    const handler = (app as any)._router.stack.find((l: any) => l.route?.path === '/api/wave')?.route.stack[0].handle;
+    const handler = (app as any)._router.stack.find((l: any) => l.route?.path === '/api/wave')
+      ?.route.stack[0].handle;
     handler(fakeReq, fakeRes, () => {});
   });
 }
@@ -45,7 +56,9 @@ describe('POST /api/wave', () => {
   });
 
   it('returns fallback when generator throws', async () => {
-    const app = buildApp(async () => { throw new Error('upstream dead'); });
+    const app = buildApp(async () => {
+      throw new Error('upstream dead');
+    });
     const r = await post(app, validReq);
     expect(r.status).toBe(200);
     expect(r.body.source).toBe('fallback');
@@ -59,7 +72,10 @@ describe('POST /api/wave', () => {
   });
 
   it('truncates oversized AI output to MAX_SPAWNS_PER_WAVE', async () => {
-    const overlarge = Array.from({ length: 50 }, (_, i) => ({ enemyKind: 'soldier' as const, atMs: i * 100 }));
+    const overlarge = Array.from({ length: 50 }, (_, i) => ({
+      enemyKind: 'soldier' as const,
+      atMs: i * 100,
+    }));
     const app = buildApp(async () => ({ spawns: overlarge, source: 'ai' }));
     const r = await post(app, validReq);
     expect(r.body.spawns.length).toBeLessThanOrEqual(25);
