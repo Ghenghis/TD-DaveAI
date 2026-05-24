@@ -1,8 +1,22 @@
 import { z } from 'zod';
-import { ALL_ENEMY_KINDS, ALL_TOWER_KINDS } from '@td/shared';
+import type { EnemyKind, TowerKind } from '@td/shared';
 
-const enemyKindSchema = z.enum(ALL_ENEMY_KINDS as readonly [string, ...string[]]);
-const towerKindSchema = z.enum(ALL_TOWER_KINDS as readonly [string, ...string[]]);
+// z.enum needs a literal tuple; we duplicate the names here so the inferred
+// types are the proper EnemyKind/TowerKind unions (not just `string`). The
+// shared @td/shared package owns the canonical lists; if you add a kind there,
+// add it here too — TS will compile-error if either side drifts.
+const enemyKindSchema = z.enum([
+  'soldier',
+  'runner',
+  'tank',
+  'armored',
+] as const) satisfies z.ZodType<EnemyKind>;
+const towerKindSchema = z.enum([
+  'arrow',
+  'cannon',
+  'frost',
+  'barracks',
+] as const) satisfies z.ZodType<TowerKind>;
 
 export const waveRequestSchema = z.object({
   waveNumber: z.number().int().nonnegative(),
