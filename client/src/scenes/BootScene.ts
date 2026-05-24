@@ -18,8 +18,10 @@ export class BootScene extends Phaser.Scene {
     // Tile sprites
     // tile024 = solid green grass (confirmed correct)
     this.load.image('tile-grass', 'td-pack/PNG/Default size/towerDefense_tile024.png');
-    // tile188 = flat sand/dirt — clean path tile, no arrows or glyph markings
-    this.load.image('tile-path', 'td-pack/PNG/Default size/towerDefense_tile188.png');
+    // tile200 = brown dirt road with subtle centered stripe — reads as a real
+    // road against the green grass; the stripe is short enough to look fine
+    // on both horizontal and vertical path segments.
+    this.load.image('tile-path', 'td-pack/PNG/Default size/towerDefense_tile200.png');
     // tile187 = green circle on sand — bright green spawn marker
     this.load.image('tile-spawn', 'td-pack/PNG/Default size/towerDefense_tile187.png');
     // tile197 = blue-grey scalloped circle on sand — visually distinct goal marker
