@@ -63,7 +63,10 @@ export class Hud {
       btn.on('pointerdown', () => this.select(kind));
       this.buttons.set(kind, btn);
     });
-    this.select('arrow');
+    // selectedKind is initialized to 'arrow', so select('arrow') would short-circuit
+    // on the equality guard and never apply the highlight. Apply the initial
+    // selection background directly here instead.
+    this.buttons.get(this.selectedKind)?.setBackgroundColor('#445588');
 
     this.banner = scene.add
       .text(w / 2, h / 2, '', {
