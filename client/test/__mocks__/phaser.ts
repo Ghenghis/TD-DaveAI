@@ -5,6 +5,9 @@ const Phaser = {
     constructor(_config: unknown) {}
     destroy(_removeCanvas: boolean) {}
   },
+  Scene: class Scene {
+    constructor(_key: unknown) {}
+  },
 };
 
 export default Phaser;
