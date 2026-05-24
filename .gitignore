@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Vite
+.vite/
+
+# Secrets — defense in depth (real keys live at G:\private, outside the repo)
+private/
+.env
+.env.*
+secrets.*
+*.key
+*.pem
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Test artifacts
+coverage/
+*.lcov
+
+# Cache
+.cache/
+.turbo/
