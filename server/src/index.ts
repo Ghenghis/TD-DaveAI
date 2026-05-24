@@ -1,4 +1,5 @@
 import express, { type Express } from 'express';
+import { fileURLToPath } from 'node:url';
 import { createWaveRoute, type WaveGenerator } from './routes/wave.js';
 import { loadSecrets } from './secrets.js';
 import { requestWaveFromDeepseek } from './providers/deepseek.js';
@@ -45,7 +46,8 @@ function makeRealGenerator(deepseekKey: string): WaveGenerator {
 }
 
 // Boot only when run directly (not when imported by tests).
-const isMain = import.meta.url === `file://${process.argv[1]?.replace(/\\/g, '/')}`;
+// fileURLToPath handles the triple-slash file:///C:/... form that Node uses on Windows.
+const isMain = process.argv[1] === fileURLToPath(import.meta.url);
 if (isMain) {
   const secrets = loadSecrets();
   const app = buildApp({ generator: makeRealGenerator(secrets.deepseekKey) });
