@@ -34,6 +34,7 @@ describe('loadSecrets', () => {
   });
 
   it('does not echo key values in thrown error messages', () => {
+    expect.assertions(2); // force the catch path; fail if no exception thrown
     writeFileSync(join(dir, 'deepseek.key'), 'sk-deepseek-SENSITIVE-12345');
     // omit minimax to trigger error
     try {
@@ -41,6 +42,7 @@ describe('loadSecrets', () => {
     } catch (e) {
       const msg = String(e instanceof Error ? e.message : e);
       expect(msg).not.toContain('SENSITIVE-12345');
+      expect(msg).toMatch(/minimax\.key/);
     }
     rmSync(dir, { recursive: true });
   });
