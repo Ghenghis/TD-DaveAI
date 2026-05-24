@@ -19,8 +19,13 @@ async function callJson(app: any, method: string, url: string, body?: unknown) {
     const res: any = {
       statusCode: 200,
       setHeader() {},
-      status(s: number) { this.statusCode = s; return this; },
-      json(j: any) { resolve({ status: this.statusCode, body: j }); },
+      status(s: number) {
+        this.statusCode = s;
+        return this;
+      },
+      json(j: any) {
+        resolve({ status: this.statusCode, body: j });
+      },
     };
     const layer = app._router.stack.find((l: any) => l.route?.path === url);
     layer.route.stack[0].handle(req, res, () => {});
