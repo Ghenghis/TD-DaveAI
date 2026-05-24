@@ -1,0 +1,41 @@
+[
+  {
+    "kind": "arrow",
+    "displayName": "Arrow Tower",
+    "cost": 50,
+    "range": 180,
+    "damage": 10,
+    "fireRateMs": 600,
+    "armorPenalty": 0.5
+  },
+  {
+    "kind": "cannon",
+    "displayName": "Cannon",
+    "cost": 100,
+    "range": 160,
+    "damage": 25,
+    "fireRateMs": 1200,
+    "armorPenalty": 1.0
+  },
+  {
+    "kind": "frost",
+    "displayName": "Frost Tower",
+    "cost": 75,
+    "range": 150,
+    "damage": 4,
+    "fireRateMs": 800,
+    "slowFactor": 0.5,
+    "slowMs": 1500,
+    "armorPenalty": 1.0
+  },
+  {
+    "kind": "barracks",
+    "displayName": "Barracks",
+    "cost": 80,
+    "range": 0,
+    "damage": 0,
+    "fireRateMs": 0,
+    "blockerHp": 30,
+    "blockerRespawnMs": 5000
+  }
+]

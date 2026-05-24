@@ -1,0 +1,27 @@
+[
+  {
+    "kind": "soldier",
+    "displayName": "Soldier",
+    "hp": 30,
+    "speed": 60,
+    "bounty": 8,
+    "armor": false
+  },
+  {
+    "kind": "runner",
+    "displayName": "Runner",
+    "hp": 18,
+    "speed": 120,
+    "bounty": 6,
+    "armor": false
+  },
+  { "kind": "tank", "displayName": "Tank", "hp": 120, "speed": 35, "bounty": 18, "armor": false },
+  {
+    "kind": "armored",
+    "displayName": "Armored",
+    "hp": 60,
+    "speed": 55,
+    "bounty": 14,
+    "armor": true
+  }
+]
